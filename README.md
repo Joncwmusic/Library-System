@@ -4,9 +4,12 @@ Hopes for the project:
 
 I. Setting a small test database with the following entities:
   Books, Authors, Customers, Employees, Transactions
-  
-II. Setting up systems for adding books, employees and customers
+ - TestDB is set up on a local server (no cloud servers yet; however, may set up an instance in the future)
 
+II. Setting up systems for adding books, employees and customers
+ - Currently have UI for an admin to add new and exisiting books to the catalog
+ - No UI
+   
 III. Setting up systems for updating and processing transactions
 
 IV. Setting up reporting on 
