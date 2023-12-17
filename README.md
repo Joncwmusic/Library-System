@@ -7,8 +7,7 @@ I. Setting a small test database with the following entities:
  - TestDB is set up on a local server (no cloud servers yet; however, may set up an instance in the future)
 
 II. Setting up systems for adding books, employees and customers
- - Currently have UI for an admin to add new and exisiting books to the catalog
- - No UI
+ - Currently have skeleton UI design for an admin to add new and exisiting books to the catalog
    
 III. Setting up systems for updating and processing transactions
 
