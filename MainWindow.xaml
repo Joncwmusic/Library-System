@@ -1,0 +1,47 @@
+﻿<Window x:Class="LibrarySystemforPortfolio.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibrarySystemforPortfolio"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text= "Please Select whether you'd like to add or remove a book to the catalog." Grid.Row="0"/>
+        <Button Name ="add_new_book_btn" Content="Add New Book" Click= "AddNewBook_Click" MaxWidth="300" MaxHeight="300" Grid.Row="1"/>
+        <Button Name ="add_exisitng_book_btn" Content="Add Existing Book" Click = "AddExistingBook_Click" MaxWidth="300" MaxHeight="300"  Grid.Row="2"/>
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height ="Auto"/>
+                <RowDefinition Height ="Auto"/>
+                <RowDefinition Height ="Auto"/>
+                <RowDefinition Height ="Auto"/>
+                <RowDefinition Height ="Auto"/>
+                <RowDefinition Height ="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Name ="book_title_text" Text="Title:" Grid.Row ="0" Grid.Column="1"/>
+            <TextBlock Name ="book_author_text" Text="Author:" Grid.Row ="1" Grid.Column="1"/>
+            <TextBlock Name ="book_publisher_text" Text="Publisher:" Grid.Row ="2" Grid.Column="1"/>
+            <TextBlock Name ="book_isbn_text" Text="ISBN:" Grid.Row ="3" Grid.Column="1"/>
+            <TextBox Grid.Row ="0" Grid.Column="3"> Input the book's title </TextBox>
+            <TextBox Grid.Row ="1" Grid.Column="3"> Input the Author's name </TextBox>
+            <TextBox Grid.Row ="2" Grid.Column="3"> Input the publisher </TextBox>
+            <TextBox Grid.Row ="3" Grid.Column="3"> Input the ISBN number </TextBox>
+        </Grid>
+
+    </Grid>
+
+</Window>
