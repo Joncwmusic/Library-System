@@ -14,55 +14,146 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.SqlClient;
+
 
 namespace LibrarySystemforPortfolio
 {
+
+
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        string ConnectionString = "ConnectionStringtoServer";
         public MainWindow()
         {
             InitializeComponent();
         }
 
-           private void AddNewBook_Click(object sender, RoutedEventArgs e) 
-           {
-            book_title_text.Text = "Title:";
-            book_author_text.Text = "Author:";
-            book_publisher_text.Text = "Publisher:";
-            book_isbn_text.Text = "ISBN:";
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (rbExistingBook.IsChecked == true)
+            {
+                // User chose to add an existing book
+                string existingBookId = txtExistingBookId.Text;
+                // Implement logic to add existing book to the library based on book ID
+                MessageBox.Show($"Adding existing book with ID '{existingBookId}'.");
+            }
+            else if (rbNewBook.IsChecked == true)
+            {
+                // User chose to add a new book
+                // Toggle visibility of controls for adding a new book
+                lblTitle.Visibility = Visibility.Visible;
+                txtTitle.Visibility = Visibility.Visible;
 
-            TextBox title_text_box = new TextBox();
-            title_text_box.Text = "Input the book title";
-            Grid.SetRow(title_text_box, 0);
-            Grid.SetColumn(title_text_box, 3);
+                lblAuthor.Visibility = Visibility.Visible;
+                txtAuthor.Visibility = Visibility.Visible;
 
-            TextBox author_text_box = new TextBox();
-            author_text_box.Text = "Input the book author";
-            Grid.SetRow(title_text_box, 1);
-            Grid.SetColumn(title_text_box, 3);
+                lblISBN.Visibility = Visibility.Visible;
+                txtISBN.Visibility = Visibility.Visible;
 
-            TextBox publisher_text_box = new TextBox();
-            publisher_text_box.Text = "Input the book publisher";
-            Grid.SetRow(title_text_box, 2);
-            Grid.SetColumn(title_text_box, 3);
+                lblPublisher.Visibility = Visibility.Visible;
+                txtPublisher.Visibility = Visibility.Visible;
 
-            TextBox ISBN_text_box = new TextBox();
-            ISBN_text_box.Text = "Input the book ISBN";
-            Grid.SetRow(title_text_box, 3);
-            Grid.SetColumn(title_text_box, 3);
+                UpdateSystemButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                // No option selected
+                MessageBox.Show("Please select an option.");
+            }
         }
 
-        private void AddExistingBook_Click(object sender, RoutedEventArgs e)
+        private void UpdateDatabaseButton_Click(object sender, RoutedEventArgs e)
         {
-            instruction_text.Text = "Please Search for the Book you Wish to Add";
-            book_title_text.Text = "Title:";
-            book_author_text.Text = "Author:";
-            book_publisher_text.Text = "Publisher:";
-            book_isbn_text.Text = "ISBN:";
+            // Assuming you have a SqlConnection named "sqlConnection" initialized elsewhere in your code
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                // Open the connection
+                connection.Open();
 
+                try
+                {
+                    // Assuming you have a SqlCommand named "sqlCommand" initialized elsewhere in your code
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        // Set the connection for the command
+                        command.Connection = connection;
+
+                        // Assuming you have a table named "Books" with columns "Title", "Author", and "ISBN"
+                        string newBookTitle = txtTitle.Text;
+                        string newBookAuthor = txtAuthor.Text;
+                        int newBookISBN = Convert.ToInt32(txtISBN.Text);
+                        string newPublisher = txtPublisher.Text;
+
+                        // Assuming you have a variable "existingBookId" for the book you want to update
+                        int existingBookId = GetExistingBookId(newBookISBN); // You need to implement this method to retrieve the existing book ID
+
+                        // Set the SQL UPDATE statement
+                        command.CommandText = "INSERT INTO Books (ISBN, Title) VALUES(@ISBN, @Title)";
+
+                        // Add parameters to the command
+                        command.Parameters.AddWithValue("@Title", newBookTitle);
+                        command.Parameters.AddWithValue("@Author", newBookAuthor);
+                        command.Parameters.AddWithValue("@ISBN", newBookISBN);
+                        command.Parameters.AddWithValue("@Id", existingBookId);
+
+                        // Execute the UPDATE statement
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        // Check if the update was successful
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Database updated successfully!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("No records were updated.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error updating database: {ex.Message}");
+                }
+            }
+        }
+
+
+        private int GetExistingBookId(int existingBookISBN)
+        {
+            // Assuming you have a SqlConnection named "connection" initialized elsewhere
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+
+                // Assuming you have a SqlCommand named "command" initialized elsewhere
+                using (SqlCommand command = new SqlCommand("SELECT ISBN FROM Books WHERE ISBN = @ISBN", conn))
+                {
+                    command.Parameters.AddWithValue("@ISBN", existingBookISBN);
+
+                    // Execute the query and get the result
+                    object result = command.ExecuteScalar();
+
+                    // Check if the result is not null
+                    if (result != null)
+                    {
+                        // Convert the result to int (assuming the Id is an integer)
+                        conn.Close();
+                        return Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        // Handle the case where the book with the specified title was not found
+                        MessageBox.Show("Book not found.");
+                        conn.Close();
+                        return -1; // Or some other value indicating not found
+                    }
+                }
+            }
         }
     }
 }

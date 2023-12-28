@@ -8,7 +8,38 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <Grid.RowDefinitions>
+        <!-- TextBlock to prompt the user -->
+        <TextBlock Text="Select an option:" Margin="10" VerticalAlignment="Top" />
+
+        <!-- RadioButton to choose adding an existing book -->
+        <RadioButton Content="Add Existing Book" Name="rbExistingBook" Margin="10,40,0,0" VerticalAlignment="Top" />
+
+        <!-- RadioButton to choose adding a new book -->
+        <RadioButton Content="Add New Book" Name="rbNewBook" Margin="10,70,0,0" VerticalAlignment="Top" />
+
+        <!-- Button to proceed based on the selected option -->
+        <Button Content="Next" Click="NextButton_Click" Margin="10,100,0,0" VerticalAlignment="Top" />
+
+        <!-- Additional controls specific to adding an existing book -->
+        <TextBox Name="txtExistingBookId" ToolTip="Enter Book ID" Margin="10,130,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+
+        <!-- Additional controls specific to adding a new book -->
+        <TextBlock Name="lblTitle" Text="Title:" Margin="10,160,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+        <TextBox Name="txtTitle" ToolTip="Enter Title" Margin="60,160,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+
+        <TextBlock Name="lblAuthor" Text="Author:" Margin="10,190,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+        <TextBox Name="txtAuthor" ToolTip="Enter Author" Margin="60,190,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+
+        <TextBlock Name="lblISBN" Text="ISBN:" Margin="10,220,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+        <TextBox Name="txtISBN" ToolTip="Enter ISBN" Margin="60,220,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+
+        <TextBlock Name="lblPublisher" Text="Publisher:" Margin="10,250,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+        <TextBox Name="txtPublisher" ToolTip="Enter Publisher" Margin="60,250,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+
+
+        <Button Name="UpdateSystemButton" Content="Add Book to System" Click="UpdateDatabaseButton_Click" Margin="10,280,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -45,12 +76,12 @@
             <TextBlock Name ="book_author_text" Text="" Grid.Row ="1" Grid.Column="1"/>
             <TextBlock Name ="book_publisher_text" Text="" Grid.Row ="2" Grid.Column="1"/>
             <TextBlock Name ="book_isbn_text" Text="" Grid.Row ="3" Grid.Column="1"/>
-            <!-- <TextBox Grid.Row ="0" Grid.Column="3"> Input the book's title </TextBox> -->
+            --><!-- <TextBox Grid.Row ="0" Grid.Column="3"> Input the book's title </TextBox> -->
             <!-- <TextBox Grid.Row ="1" Grid.Column="3">Input the Author's name</TextBox> -->
             <!-- <TextBox Grid.Row ="2" Grid.Column="3">Input the publisher</TextBox> -->
-            <!-- <TextBox Grid.Row ="3" Grid.Column="3">Input the ISBN number</TextBox> -->
+            <!-- <TextBox Grid.Row ="3" Grid.Column="3">Input the ISBN number</TextBox> --><!--
 
-        </Grid>
+        </Grid>-->
 
     </Grid>
 
